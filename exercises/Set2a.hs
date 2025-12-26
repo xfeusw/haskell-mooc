@@ -46,7 +46,7 @@ takeFinal n xs = drop (length xs - n) xs
 --   updateAt 2 0 [4,5,6,7] ==>  [4,5,0,7]
 
 updateAt :: Int -> a -> [a] -> [a]
-updateAt i x xs = take i xs ++ x ++ drop (i + 1) xs
+updateAt i x xs = take i xs ++ [x] ++ drop (i + 1) xs
 
 ------------------------------------------------------------------------------
 -- Ex 4: substring i j s should return the substring of s starting at
@@ -60,7 +60,7 @@ updateAt i x xs = take i xs ++ x ++ drop (i + 1) xs
 --   substring 0 4 "abcdefgh"  ==>  "abcd"
 
 substring :: Int -> Int -> String -> String
-substring i j s = todo
+substring i j s = reverse $ drop (length s - j) $ reverse $ drop i s
 
 ------------------------------------------------------------------------------
 -- Ex 5: check if a string is a palindrome. A palindrome is a string
