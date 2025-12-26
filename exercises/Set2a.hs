@@ -75,7 +75,12 @@ substring i j s = reverse $ drop (length s - j) $ reverse $ drop i s
 --   isPalindrome "AB"       ==>  False
 
 isPalindrome :: String -> Bool
-isPalindrome str = todo
+isPalindrome str = getHalf str == getHalf (reverse str)
+  where getHalf s = if isEven (length s)
+                    then drop (length s `div` 2) s
+                    else drop (length s `div` 2 + 1) s
+        isEven n = n `mod` 2 == 0
+
 
 ------------------------------------------------------------------------------
 -- Ex 6: implement the function palindromify that chops a character
