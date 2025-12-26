@@ -113,7 +113,8 @@ palindromify s = go s (reverse s)
 --   safeDiv 4 0  ==> Nothing
 
 safeDiv :: Integer -> Integer -> Maybe Integer
-safeDiv x y = todo
+safeDiv _ 0 = Nothing
+safeDiv x y = Just $ x `div` y
 
 ------------------------------------------------------------------------------
 -- Ex 8: implement a function greet that greets a person given a first
@@ -125,7 +126,8 @@ safeDiv x y = todo
 --   greet "John" (Just "Smith")  ==> "Hello, John Smith!"
 
 greet :: String -> Maybe String -> String
-greet first last = todo
+greet first Nothing = "Hello, " ++ first
+greet first (Just last) = "Hello, " ++ first ++ "" + last
 
 ------------------------------------------------------------------------------
 -- Ex 9: safe list indexing. Define a function safeIndex so that
