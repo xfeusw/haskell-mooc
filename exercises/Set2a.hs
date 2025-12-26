@@ -94,7 +94,13 @@ isPalindrome str = getHalf str == getHalf (reverse str)
 --   palindromify "abracacabra" ==> "acaca"
 
 palindromify :: String -> String
-palindromify s = todo
+palindromify s = go s (reverse s)
+  where
+    go [] _  = []
+    go [x] _ = [x]
+    go xs rxs
+        | xs == rxs  = xs
+        | otherwise  = go (init (tail xs)) (init (tail rxs))
 
 ------------------------------------------------------------------------------
 -- Ex 7: implement safe integer division, that is, a function that
