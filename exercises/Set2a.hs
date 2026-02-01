@@ -138,9 +138,10 @@ greet first (Just last) = "Hello, " ++ first ++ " " ++ last ++ "!"
 --   safeIndex ["a","b","c"] (-1)  ==> Nothing
 
 safeIndex :: [a] -> Int -> Maybe a
-safeIndex xs i
-  | i >= length xs || i < 0 = Nothing
-  | otherwise               = Just (xs !! i)
+safeIndex _ i  | i < 0 = Nothing
+safeIndex [] _         = Nothing
+safeIndex (x:0)  0     = Just x
+safeIndex (_:xs) i     = safeIndex xs (i - 1)
 
 ------------------------------------------------------------------------------
 -- Ex 10: another variant of safe division. This time you should use
