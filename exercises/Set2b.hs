@@ -128,7 +128,14 @@ countdown' s n
 -- Hint: remember the mod function!
 
 smallestDivisor :: Integer -> Integer
-smallestDivisor = todo
+smallestDivisor 1 = 1
+smallestDivisor 0 = 0
+smallestDivisor n = smallestDivisor' 2 n
+
+smallestDivisor' :: Integer -> Integer -> Integer
+smallestDivisor' k n | n `mod` k == 0 = k
+                     | k ^ 2 > n      = n
+                     | otherwise      = smallestDivisor' (k + 1) n
 
 ------------------------------------------------------------------------------
 -- Ex 7: implement a function isPrime that checks if the given number
@@ -137,7 +144,9 @@ smallestDivisor = todo
 -- Ps. 0 and 1 are not prime numbers
 
 isPrime :: Integer -> Bool
-isPrime = todo
+isPrime n
+  | n <= 1 = False
+  | otherwise = n == smallestDivisor n
 
 ------------------------------------------------------------------------------
 -- Ex 8: implement a function biggestPrimeAtMost that returns the
@@ -152,4 +161,7 @@ isPrime = todo
 --   biggestPrimeAtMost 10 ==> 7
 
 biggestPrimeAtMost :: Integer -> Integer
-biggestPrimeAtMost = todo
+biggestPrimeAtMost n
+  | n <= 3 = n
+  | isPrime n = n
+  | otherwise = biggestPrimeAtMost (n - 1)
