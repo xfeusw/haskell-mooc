@@ -18,7 +18,7 @@
         pkgs,
         ...
       }: let
-        hpkgs = pkgs.haskell.packages.ghc912;
+        hpkgs = pkgs.haskell.packages.ghc96;
 
         tests = pkgs.haskell.lib.overrideCabal (hpkgs.callCabal2nix "tests" ./. {}) (_: {
           doCheck = true;

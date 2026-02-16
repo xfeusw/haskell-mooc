@@ -51,7 +51,17 @@ buildList s c e
 -- Ps. you'll probably need a recursive helper function
 
 sums :: Int -> [Int]
-sums i = todo
+sums 0 = []
+sums i = sums' 0 i
+
+sums' :: Int -> Int -> [Int]
+sums' x a
+  | x == a = []
+  | otherwise = p b : sums' b a where b = x + 1
+
+p :: Int -> Int
+p 1 = 1
+p n = n + p (n - 1)
 
 ------------------------------------------------------------------------------
 -- Ex 3: define a function mylast that returns the last value of the
@@ -65,7 +75,8 @@ sums i = todo
 --   mylast 0 [1,2,3] ==> 3
 
 mylast :: a -> [a] -> a
-mylast def xs = todo
+mylast n [] = n
+mylast n (x:xs) = mylast x xs
 
 ------------------------------------------------------------------------------
 -- Ex 4: safe list indexing. Define a function indexDefault so that
@@ -83,7 +94,9 @@ mylast def xs = todo
 --   indexDefault ["a","b","c"] (-1) "d" ==> "d"
 
 indexDefault :: [a] -> Int -> a -> a
-indexDefault xs i def = todo
+indexDefault [] i def = def
+indexDefault (x:_) 0 _ = x
+indexDefault (_:xs) i def = if i < 0 then def else indexDefault xs (i - 1) def
 
 ------------------------------------------------------------------------------
 -- Ex 5: define a function that checks if the given list is in

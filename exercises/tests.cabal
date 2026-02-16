@@ -24,6 +24,6 @@ library
     wai,
     warp
 
-  default-language: GHC2024
+  default-language: GHC2021
   default-extensions:
     BlockArguments
