@@ -96,7 +96,10 @@ mylast n (x:xs) = mylast x xs
 indexDefault :: [a] -> Int -> a -> a
 indexDefault [] i def = def
 indexDefault (x:_) 0 _ = x
-indexDefault (_:xs) i def = if i < 0 then def else indexDefault xs (i - 1) def
+indexDefault (_:xs) i def =
+  if i < 0
+  then def
+  else indexDefault xs (i - 1) def
 
 ------------------------------------------------------------------------------
 -- Ex 5: define a function that checks if the given list is in
@@ -112,7 +115,13 @@ indexDefault (_:xs) i def = if i < 0 then def else indexDefault xs (i - 1) def
 --   sorted [7,2,7] ==> False
 
 sorted :: [Int] -> Bool
-sorted xs = todo
+sorted [] = True
+sorted [x] = True
+sorted xs = if h xs > s xs then False else sorted (rf xs)
+  where
+    h (x:_) = x
+    s (_:x:_) = x
+    rf (_:xs) = xs
 
 ------------------------------------------------------------------------------
 -- Ex 6: compute the partial sums of the given list like this:
