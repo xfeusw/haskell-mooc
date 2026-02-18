@@ -133,7 +133,9 @@ sorted xs = if h xs > s xs then False else sorted (rf xs)
 -- Use pattern matching and recursion (and the list constructors : and [])
 
 sumsOf :: [Int] -> [Int]
-sumsOf xs = todo
+sumsOf xs = sumsOf' xs 0 where
+  sumsOf' [] _ = []
+  sumsOf' (x:xs) c = (c+x) : sumsOf' xs (c+x)
 
 ------------------------------------------------------------------------------
 -- Ex 7: implement the function merge that merges two sorted lists of
@@ -148,7 +150,11 @@ sumsOf xs = todo
 --   merge [1] [2,3,4,5,6] ==> [1,2,3,4,5,6]
 
 merge :: [Int] -> [Int] -> [Int]
-merge xs ys = todo
+merge [] ys = ys
+merge xs [] = xs
+merge (x:xs) (y:ys) = if x<=y
+                      then x: merge xs (y:ys)
+                      else y: merge (x:xs) ys
 
 ------------------------------------------------------------------------------
 -- Ex 8: compute the biggest element, using a comparison function
