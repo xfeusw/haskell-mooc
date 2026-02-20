@@ -136,7 +136,7 @@ incrementKey k m = map (\(key, val) -> if key == k then (key, val + 1) else (key
 -- length to a Fractional
 
 average :: Fractional a => [a] -> a
-average xs = todo
+average xs = sum xs / (fromIntegral $ length xs)
 
 ------------------------------------------------------------------------------
 -- Ex 8: given a map from player name to score and two players, return
@@ -155,7 +155,13 @@ average xs = todo
 --     ==> "Lisa"
 
 winner :: Map.Map String Int -> String -> String -> String
-winner scores player1 player2 = todo
+winner s p1 p2
+  | gw p1 s > gw p2 s = p1
+  | gw p2 s > gw p1 s = p2
+  | otherwise = p1
+
+gw :: String -> Map.Map String Int -> Int
+gw k m = Map.findWithDefault 0 k m
 
 ------------------------------------------------------------------------------
 -- Ex 9: compute how many times each value in the list occurs. Return
