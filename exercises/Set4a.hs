@@ -176,7 +176,12 @@ gw k m = Map.findWithDefault 0 k m
 --     ==> Map.fromList [(False,3),(True,1)]
 
 freqs :: (Eq a, Ord a) => [a] -> Map.Map a Int
-freqs xs = todo
+freqs [] = Map.fromList []
+freqs (x:xs)  = Map.alter freqs' x (freqs xs)
+
+freqs' :: Maybe Int -> Maybe Int
+freqs' (Just x) = Just (x+1)
+freqs' Nothing = Just (1)
 
 ------------------------------------------------------------------------------
 -- Ex 10: recall the withdraw example from the course material. Write a
