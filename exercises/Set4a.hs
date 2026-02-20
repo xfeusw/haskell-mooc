@@ -103,7 +103,8 @@ rangeOf xs = maximum xs - minimum xs
 --   longest [[1,2,3],[4,5],[6]] ==> [1,2,3]
 --   longest ["bcd","def","ab"] ==> "bcd"
 
-longest = todo
+longest :: Ord x => [[x]] -> [x]
+longest list = ((sortBy (comparing (\x -> (-length (x), x))) (list)) !! 0)
 
 ------------------------------------------------------------------------------
 -- Ex 6: Implement the function incrementKey, that takes a list of
