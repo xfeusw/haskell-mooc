@@ -117,11 +117,7 @@ indexDefault (_:xs) i def =
 sorted :: [Int] -> Bool
 sorted [] = True
 sorted [x] = True
-sorted xs = if h xs > s xs then False else sorted (rf xs)
-  where
-    h (x:_) = x
-    s (_:x:_) = x
-    rf (_:xs) = xs
+sorted (x:y:xs) = if x > y then False else sorted (y : xs)
 
 ------------------------------------------------------------------------------
 -- Ex 6: compute the partial sums of the given list like this:
