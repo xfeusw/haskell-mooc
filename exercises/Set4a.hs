@@ -36,12 +36,9 @@ import Data.Array
 
 allEqual :: Eq a => [a] -> Bool
 allEqual [] = True
-allEqual [x] = True
-allEqual xs = if h xs == s xs then allEqual $ rf xs else False
-  where
-    h (x:_) = x
-    s (_:x:_) = x
-    rf (_:xs) = xs
+allEqual xs
+  | length (nub xs) == 1 = True
+  | otherwise = False
 
 ------------------------------------------------------------------------------
 -- Ex 2: implement the function distinct which returns True if all
@@ -56,7 +53,9 @@ allEqual xs = if h xs == s xs then allEqual $ rf xs else False
 --   distinct [1,2] ==> True
 
 distinct :: Eq a => [a] -> Bool
-distinct = todo
+distinct xs
+  | length (xs) == length (nub xs) = True
+  | otherwise = False
 
 ------------------------------------------------------------------------------
 -- Ex 3: implement the function middle that returns the middle value
