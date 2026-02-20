@@ -120,8 +120,8 @@ longest list = ((sortBy (comparing (\x -> (-length (x), x))) (list)) !! 0)
 --   incrementKey True [(True,1),(False,3),(True,4)] ==> [(True,2),(False,3),(True,5)]
 --   incrementKey 'a' [('a',3.4)] ==> [('a',4.4)]
 
-incrementKey :: k -> [(k,v)] -> [(k,v)]
-incrementKey = todo
+incrementKey :: (Num v, Eq k) => k -> [(k,v)] -> [(k,v)]
+incrementKey k m = map (\(key, val) -> if key == k then (key, val + 1) else (key, val)) m
 
 ------------------------------------------------------------------------------
 -- Ex 7: compute the average of a list of values of the Fractional
