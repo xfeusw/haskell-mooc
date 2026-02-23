@@ -209,7 +209,16 @@ freqs' Nothing = Just (1)
 --     ==> fromList [("Bob",100),("Mike",50)]
 
 transfer :: String -> String -> Int -> Map.Map String Int -> Map.Map String Int
-transfer from to amount bank = todo
+transfer f t a b
+  | (at f t a b) = Map.adjust (\x -> x + a) t (Map.adjust (\x -> x - a) f b)
+  | otherwise = b
+
+at :: String -> String -> Int -> Map.Map String Int -> Bool
+at f t a b =
+     (Map.member f b)
+  && (Map.member t b)
+  && ((Map.findWithDefault 0 f b) - a >= 0)
+  && (a >= 0)
 
 ------------------------------------------------------------------------------
 -- Ex 11: given an Array and two indices, swap the elements in the indices.
