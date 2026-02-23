@@ -239,4 +239,4 @@ swap i j arr = arr // [(i, (arr ! j)), (j, (arr ! i))]
 -- Hint: check out Data.Array.indices or Data.Array.assocs
 
 maxIndex :: (Ix i, Ord a) => Array i a -> i
-maxIndex = todo
+maxIndex arr = fst (maximumBy (comparing (snd)) (assocs (arr)))
