@@ -268,10 +268,17 @@ data Nat = Zero | PlusOne Nat
   deriving (Show,Eq)
 
 fromNat :: Nat -> Int
-fromNat n = todo
+fromNat Zero = 0
+fromNat (PlusOne n) = 1 + fromNat n
 
 toNat :: Int -> Maybe Nat
-toNat z = todo
+toNat z
+  | z < 0 = Nothing
+  | otherwise = Just (toNat' z)
+
+toNat' :: Int -> Nat
+toNat' 0 = Zero
+toNat' z = PlusOne (toNat' (z - 1))
 
 ------------------------------------------------------------------------------
 -- Ex 12: While pleasingly simple in its definition, the Nat datatype is not
