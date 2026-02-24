@@ -70,8 +70,8 @@ slHelper c (s, l) = (s + c, l + 1)
 myConcat :: [[a]] -> [a]
 myConcat xs = foldr concatHelper concatStart xs
 
-concatStart = todo
-concatHelper = todo
+concatStart = []
+concatHelper c a = c ++ a
 
 ------------------------------------------------------------------------------
 -- Ex 5: get all occurrences of the largest number in a list with a
@@ -83,10 +83,14 @@ concatHelper = todo
 --   largest [1,3,2,3] ==> [3,3]
 
 largest :: [Int] -> [Int]
+largest [] = []
 largest xs = foldr largestHelper [] xs
 
-largestHelper = todo
-
+largestHelper c [] = [c]
+largestHelper c t@(x:xs)
+  | x == c = [c] ++ t
+  | c > x = [c]
+  | otherwise = t
 
 ------------------------------------------------------------------------------
 -- Ex 6: get the first element of a list with a fold. Define
