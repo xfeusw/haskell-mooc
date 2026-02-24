@@ -65,7 +65,8 @@ allValues c (Node v x y) = c v && allValues c x && allValues c y
 --   ==> (Node 2 (Node 3 Empty Empty) (Node 4 Empty Empty))
 
 mapTree :: (a -> b) -> Tree a -> Tree b
-mapTree f t = todo
+mapTree _ Empty = Empty
+mapTree f (Node v x y) = Node (f v) (mapTree f x) (mapTree f y)
 
 ------------------------------------------------------------------------------
 -- Ex 6: given a value and a tree, build a new tree that is the same,
