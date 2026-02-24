@@ -155,7 +155,11 @@ cull n (Node a x y)
 --                     (Node 3 Empty Empty))   ==>   True
 
 isOrdered :: Ord a => Tree a -> Bool
-isOrdered = todo
+isOrdered Empty = True
+isOrdered (Node _ Empty Empty) = True
+isOrdered (Node a Empty b@(Node c _ _ )) = c > a && isOrdered b
+isOrdered (Node a b@(Node c _ _) Empty) = c < a && isOrdered b
+isOrdered (Node a l@(Node b _ _) r@(Node c _ _)) = (b < a) && (c > a) && (isOrdered l) && (isOrdered r)
 
 ------------------------------------------------------------------------------
 -- Ex 8: a path in a tree can be represented as a list of steps that
