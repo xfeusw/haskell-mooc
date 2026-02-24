@@ -13,6 +13,7 @@ import Mooc.Todo
 --
 -- The constructors don't need any fields.
 
+data Vehicle = Bike | Bus | Tram | Train
 
 ------------------------------------------------------------------------------
 -- Ex 2: Define the type BusTicket that can represent values like these:
@@ -198,6 +199,15 @@ data Color = Red | Green | Blue | Mix Color Color | Invert Color
   deriving Show
 
 rgb :: Color -> [Double]
+
+
+
+
+
+
+
+
+
 rgb col = todo
 
 ------------------------------------------------------------------------------
@@ -222,6 +232,15 @@ rgb col = todo
 -- the value type v.
 --
 -- For example:
+
+
+
+
+
+
+
+
+
 --
 --  Pair "cat" True (Pair "dog" False Empty)  ::  KeyVals String Bool
 --
