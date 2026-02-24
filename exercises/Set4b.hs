@@ -121,4 +121,6 @@ headHelper c _ = Just c
 myLast :: [a] -> Maybe a
 myLast xs = foldr lastHelper Nothing xs
 
-lastHelper = todo
+lastHelper :: a -> Maybe a -> Maybe a
+lastHelper c Nothing = Just c
+lastHelper c a = a
