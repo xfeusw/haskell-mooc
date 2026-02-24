@@ -222,5 +222,14 @@ set (StepR:steps) val (Node v l r) = Node v l (set steps val r)
 --                    (Node 5 Empty Empty))                     ==>  Just [StepL,StepR]
 
 search :: Eq a => a -> Tree a -> Maybe [Step]
--- search x (Node a Empty Empty) = if x == a then Just [] else Nothing
-search = todo
+search _ Empty = Nothing
+search val (Node v l r)
+  | v == val = Just []
+  | otherwise =
+      let leftSearch = search val l
+          rightSearch = search val r
+      in case leftSearch of
+          Just steps -> Just (StepL : steps)
+          Nothing -> case rightSearch of
+                        Just steps -> Just (StepR : steps)
+                        Nothing -> Nothing
