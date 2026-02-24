@@ -103,9 +103,10 @@ largestHelper c t@(x:xs)
 --   myHead [1,2,3]  ==>  Just 1
 
 myHead :: [a] -> Maybe a
+myHead [] = Nothing
 myHead xs = foldr headHelper Nothing xs
 
-headHelper = todo
+headHelper c _ = Just c
 
 ------------------------------------------------------------------------------
 -- Ex 7: get the last element of a list with a fold. Define lasthelper
