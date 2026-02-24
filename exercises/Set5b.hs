@@ -157,8 +157,8 @@ cull n (Node a x y)
 isOrdered :: Ord a => Tree a -> Bool
 isOrdered Empty = True
 isOrdered (Node _ Empty Empty) = True
-isOrdered (Node a Empty b@(Node c _ _ )) = c > a && isOrdered b
-isOrdered (Node a b@(Node c _ _) Empty) = c < a && isOrdered b
+isOrdered (Node a Empty r@(Node c _ _ )) = c > a && isOrdered r
+isOrdered (Node a l@(Node c _ _) Empty) = c < a && isOrdered l
 isOrdered (Node a l@(Node b _ _) r@(Node c _ _)) = (b < a) && (c > a) && (isOrdered l) && (isOrdered r)
 
 ------------------------------------------------------------------------------
