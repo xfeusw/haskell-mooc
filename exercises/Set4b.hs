@@ -123,4 +123,4 @@ myLast xs = foldr lastHelper Nothing xs
 
 lastHelper :: a -> Maybe a -> Maybe a
 lastHelper c Nothing = Just c
-lastHelper c a = a
+lastHelper _ a = a
