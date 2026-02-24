@@ -22,6 +22,8 @@ data Vehicle = Bike | Bus | Tram | Train
 --  - MonthlyTicket "December"
 
 
+data BusTicket = MonthlyTicket String | SingleTicket
+
 ------------------------------------------------------------------------------
 -- Ex 3: Here's the definition for a datatype ShoppingEntry that
 -- represents an entry in a shopping basket. It has an item name (a
