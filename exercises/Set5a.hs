@@ -211,7 +211,7 @@ rgb Red = [1,0,0]
 rgb Green = [0,1,0]
 rgb Blue = [0,0,1]
 rgb (Invert x) = map (\x -> abs (1-x)) (rgb x)
-rgb (Mix a b ) = zipWith (\x y -> (x + y ) / 2) (rgb a) (rgb b)
+rgb (Mix a b) = zipWith (\x y -> (x + y ) / 2) (rgb a) (rgb b)
 
 ------------------------------------------------------------------------------
 -- Ex 9: define a parameterized datatype OneOrTwo that contains one or
@@ -221,6 +221,7 @@ rgb (Mix a b ) = zipWith (\x y -> (x + y ) / 2) (rgb a) (rgb b)
 --   One True         ::  OneOrTwo Bool
 --   Two "cat" "dog"  ::  OneOrTwo String
 
+data OneOrTwo a = One a | Two a a
 
 ------------------------------------------------------------------------------
 -- Ex 10: define a recursive datatype KeyVals for storing a set of
