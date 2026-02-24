@@ -21,7 +21,9 @@ import Mooc.Todo
 countNothings :: [Maybe a] -> Int
 countNothings xs = foldr countHelper 0 xs
 
-countHelper = todo
+countHelper :: Maybe a -> Int -> Int
+countHelper Nothing x = x + 1
+countHelper _ x = x
 
 ------------------------------------------------------------------------------
 -- Ex 2: myMaximum with a fold. Just like in the previous exercise,
@@ -114,4 +116,3 @@ myLast :: [a] -> Maybe a
 myLast xs = foldr lastHelper Nothing xs
 
 lastHelper = todo
-
