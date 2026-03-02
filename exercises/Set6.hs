@@ -193,12 +193,17 @@ simplify (RationalNumber a b) = RationalNumber (a `div` cd) (b `div` cd)
 --   signum (RationalNumber 0 2)             ==> RationalNumber 0 1
 
 instance Num RationalNumber where
-  p + q = todo
-  p * q = todo
-  abs q = todo
-  signum q = todo
-  fromInteger x = todo
-  negate q = todo
+  (RationalNumber a b) + (RationalNumber c d) = simplify $ RationalNumber ((a * d) + (b * c)) (b * d)
+  (RationalNumber a b) * (RationalNumber c d) = simplify $ RationalNumber (a * c) (b * d)
+  abs (RationalNumber q b) = if q < 0 then RationalNumber (q - (q * 2)) b else RationalNumber q b
+  signum (RationalNumber a b) = RationalNumber (cs a) (cs b)
+  fromInteger x = RationalNumber x 1
+  negate (RationalNumber a b) = RationalNumber (0 - a) b
+
+cs n
+  | n == 0 = 0
+  | abs n == n = 1
+  | otherwise = -1
 
 ------------------------------------------------------------------------------
 -- Ex 11: a class for adding things. Define a class Addable with a
@@ -213,6 +218,17 @@ instance Num RationalNumber where
 --   add [1,2] [3,4]        ==>  [1,2,3,4]
 --   add zero [True,False]  ==>  [True,False]
 
+class Addable a where
+  zero :: a
+  add :: a -> a -> a
+
+instance Addable Integer where
+  zero = 0
+  add x y = x + y
+
+instance Addable [a] where
+  zero = []
+  add x y = x ++ y
 
 ------------------------------------------------------------------------------
 -- Ex 12: cycling. Implement a type class Cycle that contains a
@@ -243,3 +259,20 @@ data Color = Red | Green | Blue
   deriving (Show, Eq)
 data Suit = Club | Spade | Diamond | Heart
   deriving (Show, Eq)
+
+class Cycle a where
+  step :: a -> a
+  stepMany :: Int -> a -> a
+  stepMany 0 a = a
+  stepMany n a = stepMany (n - 1) (step a)
+
+instance Cycle Color where
+  step Red = Green
+  step Green = Blue
+  step Blue = Red
+
+instance Cycle Suit where
+  step Club = Spade
+  step Spade = Diamond
+  step Diamond = Heart
+  step Heart = Club
