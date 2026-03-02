@@ -150,7 +150,7 @@ data RationalNumber = RationalNumber Integer Integer
   deriving Show
 
 instance Eq RationalNumber where
-  p == q = todo
+  (RationalNumber a b) == (RationalNumber c d) = a * d == b * c
 
 ------------------------------------------------------------------------------
 -- Ex 9: implement the function simplify, which simplifies a rational
@@ -170,7 +170,9 @@ instance Eq RationalNumber where
 -- Hint: Remember the function gcd?
 
 simplify :: RationalNumber -> RationalNumber
-simplify p = todo
+simplify (RationalNumber a b) = RationalNumber (a `div` cd) (b `div` cd)
+  where
+    cd = gcd a b
 
 ------------------------------------------------------------------------------
 -- Ex 10: implement the typeclass Num for RationalNumber. The results
