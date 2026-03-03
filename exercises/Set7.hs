@@ -128,7 +128,13 @@ bake events = go Start events
 --   average (1.0 :| [2.0,3.0])  ==>  2.0
 
 average :: Fractional a => NonEmpty a -> a
-average = todo
+average x = sumne x / lne x
+
+sumne :: (Fractional a) => NonEmpty a -> a
+sumne (x :| xs) = foldl (+) x xs
+
+lne :: Fractional a => NonEmpty a -> a
+lne = foldl (\a _ -> a + 1) 0
 
 ------------------------------------------------------------------------------
 -- Ex 5: reverse a NonEmpty list.
