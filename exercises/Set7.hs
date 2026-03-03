@@ -26,11 +26,11 @@ data Velocity = Velocity Double
 
 -- velocity computes a velocity given a distance and a time
 velocity :: Distance -> Time -> Velocity
-velocity = todo
+velocity (Distance x) (Time y) = Velocity (x / y)
 
 -- travel computes a distance given a velocity and a time
 travel :: Velocity -> Time -> Distance
-travel = todo
+travel (Velocity x) (Time y) = Distance (x * y)
 
 ------------------------------------------------------------------------------
 -- Ex 2: let's implement a simple Set datatype. A Set is a list of
@@ -49,15 +49,16 @@ data Set a = Set [a]
 
 -- emptySet is a set with no elements
 emptySet :: Set a
-emptySet = todo
+emptySet = Set []
 
 -- member tests if an element is in a set
 member :: Eq a => a -> Set a -> Bool
-member = todo
+member _ (Set []) = False
+member e (Set s) = elem e s
 
 -- add a member to a set
-add :: a -> Set a -> Set a
-add = todo
+add :: Ord a => a -> Set a -> Set a
+add e s@(Set l) = if member e s then s else Set (sort (e:l))
 
 ------------------------------------------------------------------------------
 -- Ex 3: a state machine for baking a cake. The type Event represents
