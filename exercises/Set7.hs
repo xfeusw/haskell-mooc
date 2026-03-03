@@ -142,7 +142,8 @@ lne = foldl (\a _ -> a + 1) 0
 -- PS. The Data.List.NonEmpty type has been imported for you
 
 reverseNonEmpty :: NonEmpty a -> NonEmpty a
-reverseNonEmpty = todo
+reverseNonEmpty (x :| []) = x :| []
+reverseNonEmpty g@(x :| xs) = last xs :| drop 1 (reverse (x:xs))
 
 ------------------------------------------------------------------------------
 -- Ex 6: implement Semigroup instances for the Distance, Time and
