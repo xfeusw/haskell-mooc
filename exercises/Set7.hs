@@ -155,6 +155,14 @@ reverseNonEmpty g@(x :| xs) = last xs :| drop 1 (reverse (x:xs))
 -- velocity (Distance 50 <> Distance 10) (Time 1 <> Time 2)
 --    ==> Velocity 20
 
+instance Semigroup Distance where
+  Distance x <> Distance y = Distance $ x + y
+
+instance Semigroup Time where
+  Time x <> Time y = Time $ x + y
+
+instance Semigroup Velocity where
+  Velocity x <> Velocity y = Velocity $ x + y
 
 ------------------------------------------------------------------------------
 -- Ex 7: implement a Monoid instance for the Set type from exercise 2.
@@ -164,6 +172,20 @@ reverseNonEmpty g@(x :| xs) = last xs :| drop 1 (reverse (x:xs))
 --
 -- What are the class constraints for the instances?
 
+instance Ord a => Semigroup (Set a) where
+  Set x <> Set y = aps (eafs (Set y)) (Set x)
+
+
+aps :: Ord a => [a] -> Set a -> Set a
+aps [] b = b
+aps (x:xs) b = add x (aps xs b)
+
+eafs :: Set a -> [a]
+eafs (Set []) = []
+eafs (Set (x:xs)) = x:xs
+
+instance Ord a => Monoid (Set a) where
+  mempty = emptySet
 
 ------------------------------------------------------------------------------
 -- Ex 8: below you'll find two different ways of representing
