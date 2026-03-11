@@ -297,17 +297,33 @@ passwordAllowed s (Or x y) = passwordAllowed s x || passwordAllowed s y
 --     ==> "(3*(1+1))"
 --
 
-data Arithmetic = Todo
+data Arithmetic = Operation String Arithmetic Arithmetic | Literal Integer
   deriving Show
 
 literal :: Integer -> Arithmetic
-literal = todo
+literal = Literal
 
 operation :: String -> Arithmetic -> Arithmetic -> Arithmetic
-operation = todo
+operation s x y = Operation s x y
 
 evaluate :: Arithmetic -> Integer
-evaluate = todo
+evaluate (Literal x) = x
+evaluate (Operation "+" (Literal x) (Literal y)) = x + y
+evaluate (Operation "*" (Literal x) (Literal y)) = x * y
+evaluate (Operation "*" (Literal x) y) = x * (evaluate y)
+evaluate (Operation "*" x (Literal y)) = (evaluate x) * y
+evaluate (Operation "+" (Literal x) y) = x + (evaluate y)
+evaluate (Operation "+" x (Literal y)) = (evaluate x) + y
+evaluate (Operation "*" x y) =( evaluate x) * (evaluate y)
+evaluate (Operation "+" x y) =( evaluate x) + (evaluate y)
 
 render :: Arithmetic -> String
-render = todo
+render (Literal x) = show x
+render (Operation "+" (Literal x) (Literal y)) = "(" ++ (show x) ++ "+"  ++ (show y) ++ ")"
+render (Operation "*" (Literal x) (Literal y)) = "(" ++ (show x) ++  "*" ++ (show y) ++ ")"
+render (Operation "*" (Literal x) y) = "("++  (show x)  ++ "*" ++  (render y) ++ ")"
+render (Operation "*" x (Literal y)) = "(" ++ (render x)  ++ "*" ++ (show y) ++ ")"
+render (Operation "+" (Literal x) y) =  "("++  (show x)  ++ "+" ++  (render y) ++ ")"
+render (Operation "+" x (Literal y)) = "(" ++ (render x)  ++ "+" ++ (show y) ++ ")"
+render (Operation "*" x y) = "(" ++ (render x)  ++ "*" ++ (render y) ++ ")"
+render (Operation "+" x y) = "(" ++ (render x)  ++ "+" ++ (render y) ++ ")"
