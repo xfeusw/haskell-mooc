@@ -255,4 +255,4 @@ multiply :: Permutation -> Permutation -> Permutation
 multiply p q = map (\i -> p !! (q !! i)) (identity (length p))
 
 permute :: (Ord a) => Permutation -> [a] -> [a]
-permute x y = map snd $ sort $ zip x y
+permute x y = map snd (sort (zip x y))
