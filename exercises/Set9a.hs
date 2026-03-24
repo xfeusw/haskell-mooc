@@ -11,6 +11,7 @@
 module Set9a where
 
 import Data.Char
+import Data.Either
 import Data.List
 import Data.Ord
 
@@ -97,8 +98,11 @@ repeated _ = Nothing
 --     ==> Left "no data"
 
 sumSuccess :: [Either String Int] -> Either String Int
--- sumSuccess []
-sumSuccess = todo
+sumSuccess xs
+    | length r == 0 = Left "no data"
+    | otherwise = Right $ foldr (+) 0 r
+  where
+    r = rights xs
 
 ------------------------------------------------------------------------------
 -- Ex 6: A combination lock can either be open or closed. The lock
@@ -120,30 +124,36 @@ sumSuccess = todo
 --   isOpen (open "0000" (lock (changeCode "0000" (open "1234" aLock)))) ==> True
 --   isOpen (open "1234" (lock (changeCode "0000" (open "1234" aLock)))) ==> False
 
-data Lock = LockUndefined
+data Lock = Open String | Closed String
     deriving (Show)
 
 -- aLock should be a locked lock with the code "1234"
 aLock :: Lock
-aLock = todo
+aLock = Closed "1234"
 
 -- isOpen returns True if the lock is open
 isOpen :: Lock -> Bool
-isOpen = todo
+isOpen (Open _) = True
+isOpen _ = False
 
 -- open tries to open the lock with the given code. If the code is
 -- wrong, nothing happens.
-open :: String -> Lock -> Lock
-open = todo
+open :: (Eq String) => String -> Lock -> Lock
+open c (Closed oc)
+    | c == oc = Open oc
+    | otherwise = Closed oc
+open _ (Open x) = Open x
 
 -- lock closes a lock. If the lock is already closed, nothing happens.
 lock :: Lock -> Lock
-lock = todo
+lock (Open c) = Closed c
+lock l = l
 
 -- changeCode changes the code of an open lock. If the lock is closed,
 -- nothing happens.
 changeCode :: String -> Lock -> Lock
-changeCode = todo
+changeCode c (Open _) = Open c
+changeCode _ l = l
 
 ------------------------------------------------------------------------------
 -- Ex 7: Here's a type Text that just wraps a String. Implement an Eq
