@@ -73,10 +73,9 @@ countValid' (_ : _ : x : y : z : b : _) = (x == z) || (y == b)
 --   repeated [1,2,1,2,3,3] ==> Just 3
 
 repeated :: (Eq a) => [a] -> Maybe a
-repeated [] = Nothing
-repeated (x : []) = Nothing
 repeated (x : y : []) = if x == y then Just x else Nothing
 repeated (x : y : xs) = if x == y then Just x else repeated $ [y] ++ xs
+repeated _ = Nothing
 
 ------------------------------------------------------------------------------
 -- Ex 5: A laboratory has been collecting measurements. Some of the
@@ -98,6 +97,7 @@ repeated (x : y : xs) = if x == y then Just x else repeated $ [y] ++ xs
 --     ==> Left "no data"
 
 sumSuccess :: [Either String Int] -> Either String Int
+-- sumSuccess []
 sumSuccess = todo
 
 ------------------------------------------------------------------------------
