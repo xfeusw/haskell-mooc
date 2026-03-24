@@ -171,6 +171,11 @@ changeCode _ l = l
 data Text = Text String
     deriving (Show)
 
+instance Eq Text where
+    (Text a) == (Text b) = trim a == trim b
+      where
+        trim = filter (\y -> not (isSpace y))
+
 ------------------------------------------------------------------------------
 -- Ex 8: We can represent functions or mappings as lists of pairs.
 -- For example the list [("bob",13),("mary",8)] means that "bob" maps
