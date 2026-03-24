@@ -58,7 +58,10 @@ echo s@(x : xs) = s ++ ", " ++ echo xs
 -- are valid.
 
 countValid :: [String] -> Int
-countValid = todo
+countValid s = length $ filter (/= False) (map countValid' s)
+
+countValid' :: String -> Bool
+countValid' (_ : _ : x : y : z : b : _) = (x == z) || (y == b)
 
 ------------------------------------------------------------------------------
 -- Ex 4: Find the first element that repeats two or more times _in a
