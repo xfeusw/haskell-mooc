@@ -26,7 +26,12 @@ import Mooc.Todo
 -- Otherwise return "Ok."
 
 workload :: Int -> Int -> String
-workload nExercises hoursPerExercise = todo
+workload n h
+    | f > 100 = "Holy moly!"
+    | f < 10 = "Piece of cake!"
+    | otherwise = "Ok."
+  where
+    f = n * h
 
 ------------------------------------------------------------------------------
 -- Ex 2: Implement the function echo that builds a string like this:
@@ -63,7 +68,7 @@ countValid = todo
 --   repeated [1,2,2,3,3] ==> Just 2
 --   repeated [1,2,1,2,3,3] ==> Just 3
 
-repeated :: Eq a => [a] -> Maybe a
+repeated :: (Eq a) => [a] -> Maybe a
 repeated = todo
 
 ------------------------------------------------------------------------------
@@ -109,7 +114,7 @@ sumSuccess = todo
 --   isOpen (open "1234" (lock (changeCode "0000" (open "1234" aLock)))) ==> False
 
 data Lock = LockUndefined
-  deriving Show
+    deriving (Show)
 
 -- aLock should be a locked lock with the code "1234"
 aLock :: Lock
@@ -147,8 +152,7 @@ changeCode = todo
 --   Text "a bc" == Text "ab  d\n"  ==> False
 
 data Text = Text String
-  deriving Show
-
+    deriving (Show)
 
 ------------------------------------------------------------------------------
 -- Ex 8: We can represent functions or mappings as lists of pairs.
@@ -181,7 +185,7 @@ data Text = Text String
 --     compose [("a","alpha"),("b","beta"),("c","gamma")] [("alpha",1),("beta",2),("omicron",15)]
 --       ==> [("a",1),("b",2)]
 
-compose :: (Eq a, Eq b) => [(a,b)] -> [(b,c)] -> [(a,c)]
+compose :: (Eq a, Eq b) => [(a, b)] -> [(b, c)] -> [(a, c)]
 compose = todo
 
 ------------------------------------------------------------------------------
