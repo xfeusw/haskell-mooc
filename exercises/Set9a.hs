@@ -208,7 +208,10 @@ instance Eq Text where
 --       ==> [("a",1),("b",2)]
 
 compose :: (Eq a, Eq b) => [(a, b)] -> [(b, c)] -> [(a, c)]
-compose = todo
+compose ((key, value) : xs) b = case lookup value b of
+    Just x -> (key, x) : compose xs b
+    Nothing -> compose xs b
+compose _ _ = []
 
 ------------------------------------------------------------------------------
 -- Ex 9: Reorder a list using a list of indices.
@@ -251,5 +254,5 @@ identity n = [0 .. n - 1]
 multiply :: Permutation -> Permutation -> Permutation
 multiply p q = map (\i -> p !! (q !! i)) (identity (length p))
 
-permute :: Permutation -> [a] -> [a]
-permute = todo
+permute :: (Ord a) => Permutation -> [a] -> [a]
+permute x y = map snd $ sort $ zip x y
