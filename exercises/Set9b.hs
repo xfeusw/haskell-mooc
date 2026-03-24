@@ -196,7 +196,7 @@ type Candidate = Coord
 type Stack = [Coord]
 
 danger :: Candidate -> Stack -> Bool
-danger = todo
+danger c s = elem True $ map (\x -> sameCol c x || sameRow c x || sameDiag c x || sameAntidiag c x) s
 
 --------------------------------------------------------------------------------
 -- Ex 5: In this exercise, the task is to write a modified version of
