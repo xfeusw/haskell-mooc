@@ -16,7 +16,8 @@ import Mooc.Todo
 --   take 10 (doublify [0..])  ==>  [0,0,1,1,2,2,3,3,4,4]
 
 doublify :: [a] -> [a]
-doublify = todo
+doublify [] = []
+doublify (x : xs) = [x] ++ [x] ++ doublify xs
 
 ------------------------------------------------------------------------------
 -- Ex 2: Implement the function interleave that takes two lists and
@@ -37,7 +38,10 @@ doublify = todo
 --   take 10 (interleave [1..] (repeat 0)) ==> [1,0,2,0,3,0,4,0,5,0]
 
 interleave :: [a] -> [a] -> [a]
-interleave = todo
+interleave [] [] = []
+interleave (x : xs) [] = [x] ++ interleave xs []
+interleave [] (x : xs) = [x] ++ interleave [] xs
+interleave (x : xs) (y : ys) = [x] ++ [y] ++ interleave xs ys
 
 ------------------------------------------------------------------------------
 -- Ex 3: Deal out cards. Given a list of players (strings), and a list
@@ -55,7 +59,7 @@ interleave = todo
 --
 -- Hint: remember the functions cycle and zip?
 
-deal :: [String] -> [String] -> [(String,String)]
+deal :: [String] -> [String] -> [(String, String)]
 deal = todo
 
 ------------------------------------------------------------------------------
@@ -70,8 +74,6 @@ deal = todo
 --   averages [] ==> []
 --   averages [3,2,1] ==> [3.0,2.5,2.0]
 --   take 10 (averages [1..]) ==> [1.0,1.5,2.0,2.5,3.0,3.5,4.0,4.5,5.0,5.5]
-
-
 
 averages :: [Double] -> [Double]
 averages = todo
@@ -164,7 +166,7 @@ ignorecase = todo
 --   play maze ["Left","Left","Right"]
 --      ==> ["Maze","Deeper in the maze","Elsewhere in the maze","Deeper in the maze"]
 
-data Room = Room String [(String,Room)]
+data Room = Room String [(String, Room)]
 
 -- Do not modify describe, move or play. The tests will use the
 -- original definitions of describe, move and play regardless of your
@@ -178,8 +180,9 @@ move (Room _ directions) direction = lookup direction directions
 
 play :: Room -> [String] -> [String]
 play room [] = [describe room]
-play room (d:ds) = case move room d of Nothing -> [describe room]
-                                       Just r -> describe room : play r ds
+play room (d : ds) = case move room d of
+  Nothing -> [describe room]
+  Just r -> describe room : play r ds
 
 maze :: Room
 maze = todo
