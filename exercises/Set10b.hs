@@ -3,13 +3,12 @@
 --
 -- In particular, seq is not available, so you must use pattern
 -- matching to force evaluation!
-
 {-# LANGUAGE NoImplicitPrelude #-}
 
 module Set10b where
 
-import Mooc.VeryLimitedPrelude
 import Mooc.Todo
+import Mooc.VeryLimitedPrelude
 
 ------------------------------------------------------------------------------
 -- Ex 1: Define the operator ||| that works like ||, but forces its
@@ -22,7 +21,9 @@ import Mooc.Todo
 --   False ||| undefined ==> an error!
 
 (|||) :: Bool -> Bool -> Bool
-x ||| y = todo
+_ ||| True = True
+False ||| False = False
+x ||| y = True
 
 ------------------------------------------------------------------------------
 -- Ex 2: Define the function boolLength, that returns the length of a
