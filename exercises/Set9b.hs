@@ -231,7 +231,13 @@ danger c s = elem True $ map (\x -> sameCol c x || sameRow c x || sameDiag c x |
 -- solution to this version. Any working solution is okay in this exercise.)
 
 prettyPrint2 :: Size -> Stack -> String
-prettyPrint2 = todo
+prettyPrint2 x y = pp' 1 1 x y ""
+  where
+    pp' a b x y z
+        | b == x + 1 = z ++ "\n" ++ pp' (a + 1) 1 x y z
+        | a == x + 1 = z
+        | danger (a, b) y && notElem (a, b) y = z ++ "#" ++ pp' a (b + 1) x y z
+        | otherwise = if (a, b) `elem` y then z ++ "Q" ++ pp' a (b + 1) x y z else z ++ "." ++ pp' a (b + 1) x y z
 
 --------------------------------------------------------------------------------
 -- Ex 6: Now that we can check if a piece can be safely placed into a square in
@@ -275,8 +281,26 @@ prettyPrint2 = todo
 --     ####Q###
 --     Q#######
 
+getCol :: Coord -> Int
+getCol (i, j) = j
+
+getRow :: Coord -> Int
+getRow (i, j) = i
+
 fixFirst :: Size -> Stack -> Maybe Stack
-fixFirst n s = todo
+fixFirst _ [] = Just []
+fixFirst n [x]
+    | getCol x > n || getRow x > n = Nothing
+    | otherwise = Just [x]
+fixFirst n s@(x : xs)
+    | getCol x > n || getRow x > n = Nothing
+    | not (danger x xs) = Just s
+    | otherwise = pp' (nextCol x)
+  where
+    pp' a
+        | getCol a > n = Nothing
+        | not (danger a xs) = Just (a : xs)
+        | otherwise = pp' (nextCol a)
 
 --------------------------------------------------------------------------------
 -- Ex 7: We need two helper functions for stack management.
@@ -302,10 +326,10 @@ fixFirst n s = todo
 -- Hint: Remember nextRow and nextCol? Use them!
 
 continue :: Stack -> Stack
-continue s = todo
+continue (x : xs) = [nextRow x] ++ [x] ++ xs
 
 backtrack :: Stack -> Stack
-backtrack s = todo
+backtrack (_ : y : xs) = [nextCol y] ++ xs
 
 --------------------------------------------------------------------------------
 -- Ex 8: Let's take a step. Our algorithm solves the problem (in a
