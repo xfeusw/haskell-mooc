@@ -144,7 +144,11 @@ hFetchLines h = do
 -- handle.
 
 hSelectLines :: Handle -> [Int] -> IO [String]
-hSelectLines h nums = todo
+hSelectLines h n = do
+  lns <- hFetchLines h
+  let nums = map (\x -> x - 1) n
+      r = map (\x -> lns !! x) nums
+  return r
 
 ------------------------------------------------------------------------------
 -- Ex 7: In this exercise we see how a program can be split into a
@@ -185,4 +189,8 @@ counter ("print", n) = (True, show n, n)
 counter ("quit", n) = (False, "bye bye", n)
 
 interact' :: ((String, st) -> (Bool, String, st)) -> st -> IO st
-interact' f state = todo
+interact' f s = do
+  l <- getLine
+  let (nb, ns, nv) = f (l, s)
+  putStrLn ns
+  if nb then interact' f nv else return nv
