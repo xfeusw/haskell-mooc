@@ -99,7 +99,7 @@ instance Functor TwoList where
 --   count 'c' (Just 'c') ==> 1
 
 count :: (Eq a, Foldable f) => a -> f a -> Int
-count = todo
+count e = foldr (\c a -> if c == e then a + 1 else a) 0
 
 ------------------------------------------------------------------------------
 -- Ex 7: Return all elements that are in two Foldables, as a list.
@@ -110,7 +110,7 @@ count = todo
 --   inBoth Nothing [3]    ==> []
 
 inBoth :: (Foldable f, Foldable g, Eq a) => f a -> g a -> [a]
-inBoth = todo
+inBoth x y = foldr (\c a -> if c `elem` y then c : a else a) [] x
 
 ------------------------------------------------------------------------------
 -- Ex 8: Implement the instance Foldable List.
@@ -123,7 +123,8 @@ inBoth = todo
 --   length (LNode 1 (LNode 2 (LNode 3 Empty))) ==> 3
 
 instance Foldable List where
-  foldr = todo
+  foldr _ a Empty = a
+  foldr f a (LNode x y) = f x $ foldr f a y
 
 ------------------------------------------------------------------------------
 -- Ex 9: Implement the instance Foldable TwoList.
@@ -133,7 +134,8 @@ instance Foldable List where
 --   length (TwoNode 0 1 (TwoNode 2 3 TwoEmpty)) ==> 4
 
 instance Foldable TwoList where
-  foldr = todo
+  foldr _ a TwoEmpty = a
+  foldr f a (TwoNode x y z) = f x $ f y $ foldr f a z
 
 ------------------------------------------------------------------------------
 -- Ex 10: (Tricky!) Fun a is a type that wraps a function Int -> a.
@@ -147,7 +149,8 @@ data Fun a = Fun (Int -> a)
 runFun :: Fun a -> Int -> a
 runFun (Fun f) x = f x
 
-instance Functor Fun
+instance Functor Fun where
+  fmap f (Fun x) = Fun (f . x)
 
 ------------------------------------------------------------------------------
 -- Ex 11: (Tricky!) You'll find the binary tree type from Set 5b
@@ -204,10 +207,12 @@ data Tree a = Leaf | Node a (Tree a) (Tree a)
   deriving (Show)
 
 instance Functor Tree where
-  fmap = todo
+  fmap _ Leaf = Leaf
+  fmap f (Node x y z) = Node (f x) (fmap f y) (fmap f z)
 
 sumTree :: (Monoid m) => Tree m -> m
-sumTree = todo
+sumTree Leaf = mempty
+sumTree (Node x y z) = sumTree y <> x <> sumTree z
 
 instance Foldable Tree where
   foldMap f t = sumTree (fmap f t)
